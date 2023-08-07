@@ -18,7 +18,8 @@ class MyApp extends StatelessWidget {
         scaffoldBackgroundColor: const Color(0xff0A0E21),
         appBarTheme: const AppBarTheme(
           color: Color(0xff1A1F38),
-        )
+          foregroundColor: Colors.white
+        ),
       ),
       home: const HomePage(),
     );

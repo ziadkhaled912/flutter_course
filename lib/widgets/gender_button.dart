@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:your_app_name/constants/colors.dart';
 
 enum Gender {male, female}
 
@@ -18,7 +19,7 @@ class GenderButton extends StatelessWidget {
         color: const Color(0xff1A1F38),
         borderRadius: BorderRadius.circular(10),
         border: Border.all(
-          color: isActive ? Colors.pinkAccent : Colors.transparent,
+          color: isActive ? AppColors.redColor : Colors.transparent,
           width: 2
         )
       ),
