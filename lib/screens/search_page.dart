@@ -1,5 +1,7 @@
+import 'package:card_swiper/card_swiper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_advanced_ui/models/hotel_model.dart';
+import 'package:flutter_advanced_ui/screens/hotel_details_page.dart';
 import 'package:flutter_advanced_ui/shared/theme_constants.dart';
 import 'package:flutter_advanced_ui/shared/widget_extention.dart';
 import 'package:flutter_advanced_ui/widgets/home_tab_bar_widget.dart';
@@ -101,33 +103,53 @@ class _HomePageState extends State<SearchPage> {
             ),
           ),
           SizedBox(
-            height: context.screenWidth,
-            child: SwipeableCardsSection(
-              cardController: _controller,
-              context: context,
-              //add the first 3 cards (widgets)
-              items: [
-                HotelCardView(hotelModel: _hotels[0]),
-                HotelCardView(hotelModel: _hotels[1]),
-                HotelCardView(hotelModel: _hotels[2]),
-              ],
-              //Get card swipe event callbacks
-              onCardSwiped: (dir, index, widget) {
-                //Add the next card using _cardController
-                _controller.addItem(widget);
-
-                //Take action on the swiped widget based on the direction of swipe
-                //Return false to not animate cards
-                _activeCardIndex = index + 1;
-                setState(() {
-
-                });
+              height: context.screenWidth,
+          child: Swiper(
+              itemCount: _hotels.length,
+            itemBuilder: (_, index) => InkWell(
+              onTap: () {
+                Navigator.of(context).push(MaterialPageRoute(builder: (_) => HotelDetailsPage(model: _hotels[index],)));
               },
-              //
-              enableSwipeUp: true,
-              enableSwipeDown: false,
-            ),
+                child: HotelCardView(hotelModel: _hotels[index]),
+              ),
+              // pagination: const SwiperPagination(),
+            onIndexChanged: (index) {
+                _activeCardIndex = index;
+                setState(() {});
+            },
+            layout: SwiperLayout.TINDER,
+            itemWidth: context.screenWidth,
+            itemHeight: context.screenWidth,
           ),
+          ),
+          // SizedBox(
+          //   height: context.screenWidth,
+          //   child: SwipeableCardsSection(
+          //     cardController: _controller,
+          //     context: context,
+          //     //add the first 3 cards (widgets)
+          //     items: [
+          //       HotelCardView(hotelModel: _hotels[0]),
+          //       HotelCardView(hotelModel: _hotels[1]),
+          //       HotelCardView(hotelModel: _hotels[2]),
+          //     ],
+          //     //Get card swipe event callbacks
+          //     onCardSwiped: (dir, index, widget) {
+          //       //Add the next card using _cardController
+          //       _controller.addItem(widget);
+          //
+          //       //Take action on the swiped widget based on the direction of swipe
+          //       //Return false to not animate cards
+          //       _activeCardIndex = (index + 1) % (_hotels.length);
+          //       setState(() {
+          //
+          //       });
+          //     },
+          //     //
+          //     enableSwipeUp: true,
+          //     enableSwipeDown: false,
+          //   ),
+          // ),
           const SizedBox(height: 12),
           AnimatedSmoothIndicator(
             activeIndex: _activeCardIndex,
@@ -144,3 +166,13 @@ class _HomePageState extends State<SearchPage> {
     );
   }
 }
+
+///                  i
+/// [item1, item2, item3]
+/// i = 0, length = 3, lastIndex = 2
+/// user swiped the card
+/// i++ => view next card
+/// i = 1
+/// user swiped the card
+/// i++ => 2
+/// i += i % lastIndex

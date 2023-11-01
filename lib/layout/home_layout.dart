@@ -57,7 +57,7 @@ class _HomeLayoutState extends State<HomeLayout> {
       ),
       bottomNavigationBar: SafeArea(
         child: Container(
-          padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 30),
+          padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
           child: ClipRRect(
             borderRadius: BorderRadius.circular(24),
             child: GNav(
